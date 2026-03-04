@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AEGIS PROTOCOL | 认知清算中心</title>
+<!-- 引入 Tailwind CSS 用于快速构建极客 UI -->
+<script src="https://www.google.com/search?q=https://cdn.tailwindcss.com"></script>
+<style>
+@import url('https://www.google.com/search?q=https://fonts.googleapis.com/css2%3Ffamily%3DJetBrains%2BMono:wght%40400%3B700%3B800%26display%3Dswap');
+    :root {
+        --aegis-green: #deff9a;
+        --aegis-red: #ff4d4f;
+        --bg-black: #050505;
+    }
+
+    body { 
+        background-color: var(--bg-black); 
+        color: #ffffff; 
+        font-family: 'JetBrains Mono', monospace;
+        overflow-x: hidden;
+        margin: 0;
+    }
+
+    /* 赛博网格背景 */
+    .cyber-grid {
+        background-image: 
+            linear-gradient(rgba(222, 255, 154, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(222, 255, 154, 0.03) 1px, transparent 1px);
+        background-size: 40px 40px;
+    }
+
+    /* 霓虹发光文字 */
+    .neon-text {
+        text-shadow: 0 0 10px rgba(222, 255, 154, 0.5), 0 0 20px rgba(222, 255, 154, 0.2);
+    }
+
+    /* CRT 扫描线 */
+    .scanline {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(to bottom, transparent 50%, rgba(222, 255, 154, 0.01) 50%);
+        background-size: 100% 4px; z-index: 100; pointer-events: none;
+    }
+
+    /* 呼吸边框效果 */
+    .pulse-border {
+        border: 1px solid rgba(222, 255, 154, 0.1);
+        animation: pulse-b 2s infinite;
+    }
+    @keyframes pulse-b {
+        0%, 100% { border-color: rgba(222, 255, 154, 0.1); box-shadow: 0 0 5px rgba(0,0,0,0); }
+        50% { border-color: rgba(222, 255, 154, 0.5); box-shadow: 0 0 15px rgba(222, 255, 154, 0.1); }
+    }
+
+    /* 故障标题效果 */
+    .glitch-title:hover {
+        animation: glitch 0.3s infinite;
+    }
+    @keyframes glitch {
+        0% { transform: translate(0); text-shadow: 2px 2px var(--aegis-red); }
+        25% { transform: translate(-2px, 2px); text-shadow: -2px -2px var(--aegis-green); }
+        50% { transform: translate(2px, -2px); text-shadow: 2px -2px white; }
+        100% { transform: translate(0); }
+    }
+
+    /* 终端日志线条 */
+    .log-entry {
+        border-left: 2px solid var(--aegis-green);
+        padding-left: 12px;
+        margin-bottom: 8px;
+        opacity: 0.8;
+    }
+
+    /* 滚动条隐藏 */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-thumb { background: var(--aegis-green); border-radius: 10px; }
+</style>
+
+</head>
+<body class="cyber-grid min-h-screen">
+<div class="scanline"></div>
+<!-- 顶部导航栏 -->
+<nav class="border-b border-white/5 backdrop-blur-xl sticky top-0 z-50 bg-black/40">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 border-2 border-[#deff9a] flex items-center justify-center font-black text-[#deff9a] italic">A</div>
+            <div class="font-black text-xl tracking-tighter italic neon-text uppercase">Aegis_Protocol</div>
+        </div>
+        <div class="flex items-center gap-6">
+            <div class="hidden lg:block">
+                <span class="text-[9px] text-white/20 tracking-[0.5em] font-bold uppercase">Consensus_Height: 842,912</span>
+            </div>
+            <button class="bg-[#deff9a] text-black px-6 py-2 text-xs font-black rounded hover:shadow-[0_0_20px_#deff9a] transition-all">
+                CONNECT_CORE
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- 主视口 (Hero Section) -->
+<header class="max-w-7xl mx-auto px-6 pt-24 pb-16 text-center relative">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-[#deff9a]/5 blur-[100px] rounded-full -z-10 animate-pulse"></div>
+    
+    <div class="inline-block px-4 py-1 border border-[#deff9a]/20 rounded-full text-[10px] text-[#deff9a] mb-10 bg-[#deff9a]/5 font-black uppercase tracking-widest">
+        Genesis Node // aegis-protocol.com
+    </div>
+    
+    <h1 class="text-6xl md:text-9xl font-black tracking-tighter mb-8 uppercase italic leading-none glitch-title">
+        Truth <br /> <span class="text-[#deff9a] neon-text italic">Liquidation.</span>
+    </h1>
+    
+    <p class="max-w-2xl mx-auto text-white/40 text-sm md:text-lg leading-relaxed mb-16 font-light">
+        在虚假共识的时代，每一句噪音都将被精确清算。AEGIS 是一套去中心化的博弈代价预言机。
+        我们不审查内容，我们只让谎言付出代价。
+    </p>
+
+    <!-- 数据看板 (Stats Area) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div class="p-10 bg-black/60 rounded-3xl text-left pulse-border group transition-all hover:bg-white/5">
+            <div class="text-[10px] text-white/30 mb-6 tracking-widest uppercase font-black group-hover:text-[#deff9a]">全网活跃算力质押</div>
+            <div class="text-5xl font-black text-white italic">45.28 <span class="text-xl text-[#deff9a]">M/P</span></div>
+        </div>
+        <div class="p-10 bg-black/60 rounded-3xl text-left border border-red-900/20 transition-all hover:bg-red-900/5">
+            <div class="text-[10px] text-white/30 mb-6 tracking-widest uppercase font-black group-hover:text-red-500">累计清算噪音总量</div>
+            <div class="text-5xl font-black text-red-600 italic" id="main-counter">84,200 <span class="text-xl text-white/20 font-light">P</span></div>
+        </div>
+    </div>
+</header>
+
+<!-- 实时清算终端 (Console Section) -->
+<section class="max-w-5xl mx-auto px-6 py-12">
+    <div class="rounded-2xl border border-white/5 bg-[#0a0a0a] overflow-hidden shadow-2xl">
+        <div class="px-5 py-4 bg-white/5 flex items-center justify-between border-b border-white/10">
+            <div class="flex gap-2">
+                <div class="w-2 h-2 rounded-full bg-red-500/40"></div>
+                <div class="w-2 h-2 rounded-full bg-[#deff9a]/40"></div>
+                <div class="w-2 h-2 rounded-full bg-blue-500/40"></div>
+            </div>
+            <span class="text-[10px] text-white/30 font-bold uppercase tracking-widest italic">Aegis_Oracle_Stream_v1.0</span>
+        </div>
+        <div class="p-8 font-mono text-xs md:text-sm text-white/50 space-y-4" id="terminal-log">
+            <div class="log-entry text-[#deff9a] font-bold">{"[SYSTEM] 成功同步主网节点: AEGIS-PROTOCOL.COM"}</div>
+            <div class="log-entry">> [LOG] 正在监听 Bilibili 分布式评论区信号...</div>
+            <div class="log-entry">> [LOG] 发现视频 [BV1xP...] 存在高频共识异常...</div>
+            <div class="log-entry text-yellow-500">> [WARN] 预言机介入计算：真相概率锁定 98.42%</div>
+            <div class="log-entry text-red-600 font-black">> [ACTION] 判定成功：强制清算执行！收缴噪音节点 1,500 P。</div>
+            <div class="log-entry animate-pulse text-white/10">> 正在等待下一次心跳共识确认... _</div>
+        </div>
+    </div>
+</section>
+
+<!-- 页脚 (Footer) -->
+<footer class="py-24 text-center border-t border-white/5 mt-12">
+    <div class="flex justify-center gap-10 mb-8 opacity-20 hover:opacity-50 transition-opacity">
+        <div class="text-xl font-black italic">BINANCE</div>
+        <div class="text-xl font-black italic">BTC_NETWORK</div>
+        <div class="text-xl font-black italic">ORACLE_CORE</div>
+    </div>
+    <div class="text-[10px] text-white/10 tracking-[1.5em] mb-4 font-bold uppercase">Truth is the only consensus.</div>
+    <div class="text-[10px] text-[#deff9a]/20">© 2026 AEGIS-PROTOCOL.COM // POWERED BY BOOK4 ULTRA</div>
+</footer>
+
+<!-- 交互逻辑脚本 -->
+<script>
+    // 1. 实时更新清算数值
+    let baseCount = 84200;
+    const counterEl = document.getElementById('main-counter');
+    
+    setInterval(() => {
+        baseCount += Math.floor(Math.random() * 45);
+        if (counterEl) {
+            counterEl.innerHTML = `${baseCount.toLocaleString()} <span class="text-xl text-white/20 font-light">P</span>`;
+        }
+    }, 3000);
+
+    // 2. 模拟终端动态追加日志
+    const terminalLog = document.getElementById('terminal-log');
+    const logs = [
+        ["正在广播清算指令至全球节点...", "white/30"],
+        ["检测到反向共识攻击 (Confidence: 0.12)...", "yellow-500"],
+        ["清算引擎自检通过，算力稳定。", "deff9a"],
+        ["最新区块高度已达成: 842,912", "white/30"],
+        ["同步分布式评论区节点 Bilibili_Node_01...", "white/30"]
+    ];
+
+    let logIdx = 0;
+    setInterval(() => {
+        const entry = document.createElement('div');
+        entry.className = `log-entry text-${logs[logIdx][1]}`;
+        entry.innerText = `> ${logs[logIdx][0]}`;
+        // 插入在倒数第二个节点之前（保持底部的动画行）
+        terminalLog.insertBefore(entry, terminalLog.lastElementChild);
+        
+        // 保持终端内容不要过长
+        if (terminalLog.children.length > 12) {
+            terminalLog.removeChild(terminalLog.children[1]);
+        }
+        
+        logIdx = (logIdx + 1) % logs.length;
+    }, 6000);
+</script>
+
+</body>
+</html>
